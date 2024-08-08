@@ -7,8 +7,6 @@ This function implements a Monte-Carlo method to approximate the expectation of 
 template <class Statistic, class RandomVariable, class Measurement, class RNG>
 	void MonteCarlo(Statistic & , RandomVariable & , const Measurement & , RNG & , long unsigned int );
 
-#include <iostream>
-#include <vector>
 #include <random>
 
 template <typename Statistic, typename RandomVariable, typename Measurement, typename RNG>
