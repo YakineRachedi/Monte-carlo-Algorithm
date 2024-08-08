@@ -21,4 +21,17 @@ The function should simulate n random variables with the distribution given by ð
     and update res according to the previous formula.
 */
 
+
+
+class DoubleMeanVar{
+    protected :
+        double m; // Mean
+        double v; // Useful for the variance.
+    public :
+        DoubleMeanVar(double x = 0) : m(x), v(0.) {}
+        double Get_mean() const {return this-> m;}
+        double Get_var() const {return this-> v - m * m;}
+        void operator +=(double x) {this-> m += x; this->v += x * x;}
+        void operator /=(int n) {this-> m /= n; this-> v /= n;}
+};
 #endif

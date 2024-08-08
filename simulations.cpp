@@ -37,9 +37,23 @@ int main(){
      *   Note: The 4 could be replaced by `k` as a private field or
      *   template parameter...
      *   */
-    cout << "Estimated value of Pi: " << pi_approx << "\n-----------------------------------\n";
-    cout << "It takes " << pi_approximation_time.count() << " seconds " << "for " << nb_samples << " samples \n";
 
+    cout << "Estimated value of Pi: " << pi_approx << "\n";    
+    cout << "It takes " << pi_approximation_time.count() << " seconds " << "for " << nb_samples << " samples \n";
+    cout << "\n-----------------------------------\n";
+
+    // Printing in the terminal the 95% confidence interval for the value of π given by the previous simulation using the DoubleMeanVar class.
+    DoubleMeanVar pi_mv;
+    MonteCarlo(pi_mv,A,f,G,nb_samples); 
+    // Confidence interval
+    start = timer::now();
+    cout << "Average value of Pi: " << pi_mv.Get_mean() 
+        << " +/- " << 1.96 * sqrt(pi_mv.Get_var()) / sqrt(nb_samples) 
+        << "\n-----------------------------------\n";
+    end = timer::now();
+    pi_approximation_time = end - start;
+    cout << "It takes (using class DoubleMeanVar) " << pi_approximation_time.count() << " seconds " << "for " << nb_samples << " samples \n";
+    cout << "\n-----------------------------------\n";
 
     return 0;
 }
