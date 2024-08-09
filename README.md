@@ -72,3 +72,16 @@ E_d(X) - k \frac{\sqrt{Var_d(X)}}{\sqrt{n}} \leq E[X] \leq E_d(X) + k \frac{\sqr
 $$
 
 where $k$ is the quantile that determines the confidence level. For example, for a 95% confidence level, $k = 1.96$.
+
+# Estimation of integrals :
+Estimation using the Monte Carlo function template of the integrals given by :
+
+$$\int_{0}^{1} \ln(1 + x^2) \, dx$$
+
+$$\int_{\mathbb{R}^+ \times [0,1]} \ln(1 + xy) \, e^{-x} \, dx \, dy$$
+
+For the second integral, note that
+
+$$\int_{\mathbb{R}^+ \times [0,1]} f(x, y) \, e^{-x} \, dx \, dy = \mathbb{E}[f(X, Y)]$$
+
+where $X$ follows an exponential distribution with parameter 1 and $Y$ follows a uniform distribution on $[0, 1]$.

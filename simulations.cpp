@@ -2,6 +2,7 @@
 #include "pi.hpp"
 #include <iostream>
 #include <ctime>
+#include <utility>
 #include <chrono>
 
 using namespace std;
@@ -54,6 +55,25 @@ int main(){
     pi_approximation_time = end - start;
     cout << "It takes (using class DoubleMeanVar) " << pi_approximation_time.count() << " seconds " << "for " << nb_samples << " samples \n";
     cout << "\n-----------------------------------\n";
+
+    DoubleMeanVar Integral_1;
+    DoubleMeanVar Integral_2;
+
+    std::exponential_distribution<double> X(1.);
+    std::uniform_real_distribution<double> Y(1.,0.);
+
+    MonteCarlo(Integral_1,Y,[](double x){return std::log(1 + x * x);},G,nb_samples);
+    auto CoupleXY = [&](std::mt19937 & G) {return std::make_pair(X(G),Y(G));};
+    auto Function_to_evaluate = [] (std::pair<double,double> point){
+        double x = point.first;
+        double y = point.second;
+        return std::log(1 + x*y) * std::exp(-x);
+    };
+
+    MonteCarlo(Integral_2,CoupleXY,Function_to_evaluate,G,nb_samples);
+
+    cout << "Estimation of the integral 1 : " << Integral_1.Get_mean() << "+/-" << 1.96*sqrt(Integral_1.Get_var())/sqrt(nb_samples) << "\n-----------------------------------\n";
+    cout << "Estimation of the integral 2 : " << Integral_2.Get_mean() << " +/- " << 1.96*sqrt(Integral_2.Get_var())/sqrt(nb_samples) << "\n-----------------------------------\n";
 
     return 0;
 }
