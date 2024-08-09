@@ -85,3 +85,18 @@ For the second integral, note that
 $$\int_{\mathbb{R}^+ \times [0,1]} f(x, y) \, e^{-x} \, dx \, dy = \mathbb{E}[f(X, Y)]$$
 
 where $X$ follows an exponential distribution with parameter 1 and $Y$ follows a uniform distribution on $[0, 1]$.
+
+# Histograms, or the art of approximating a probability density :
+The goal here is to systematize the process using the MonteCarlo function. If we simulate a set of independent and identically distributed random variables with law L and density ρ, then the histogram of this population is a graphical approximation of the curve of ρ over a given interval $[a, b]$
+### _Simulation and Histogram Creation :_
+
+1. The interval $[a, b]$ is divided into $p$ subintervals (or bins) of equal width $\frac{b - a}{p}$. 
+
+2. We simulate $n$ independent and identically distributed random variables.
+
+3. For each simulation, if its value falls into bin $i$, we increment the $i$-th coordinate of the histogram (viewed as a vector of size $p$) by 1.
+
+4. Once all simulations are completed, the coordinates of the vector are normalized by dividing them by the total number of points in the sample.
+
+
+Using the `Histogramme` class and the `MonteCarlo` function, let's create a histogram with 50 bins of the standard normal distribution $\mathcal{N}(0,1)$ over the interval $[-3, 3]$ based on a sample of 100,000 simulations for example. And displaying this histogram using a Python script based on the `matplotlib.pyplot` library.

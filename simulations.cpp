@@ -1,6 +1,8 @@
 #include "monte_carlo.hpp"
+#include "monte_carlo.cpp"
 #include "pi.hpp"
 #include <iostream>
+#include <fstream>
 #include <ctime>
 #include <utility>
 #include <chrono>
@@ -74,6 +76,19 @@ int main(){
 
     cout << "Estimation of the integral 1 : " << Integral_1.Get_mean() << "+/-" << 1.96*sqrt(Integral_1.Get_var())/sqrt(nb_samples) << "\n-----------------------------------\n";
     cout << "Estimation of the integral 2 : " << Integral_2.Get_mean() << " +/- " << 1.96*sqrt(Integral_2.Get_var())/sqrt(nb_samples) << "\n-----------------------------------\n";
+
+
+    // Histogram of the Normal Distribution : 
+    double a = -3;
+    double b = 3;
+    double nb_of_boxes = 50;
+    normal_distribution<double> N(0.,1.);
+    Histogram H(a,b,nb_of_boxes);
+    MonteCarlo(H,N,[](double x){return x;},G,nb_samples);
+    cout << "Histogram of the Standard Normal Distribution for " << nb_of_boxes << " boxes : "<< H << "\n";
+    ofstream file("Normal_dist.dat");
+    file << H;
+    file.close();
 
     return 0;
 }
