@@ -1,5 +1,6 @@
 #include "monte_carlo.hpp"
 #include "monte_carlo.cpp"
+#include "chi_squared.hpp"
 #include "pi.hpp"
 #include <iostream>
 #include <fstream>
@@ -90,5 +91,21 @@ int main(){
     file << H;
     file.close();
 
+    // Histogram of the Chi2 Distribution for example k = 3 and k = 6 :
+    a = 0.;
+    b = 10.;
+    Chi2_distribution<double,3> Chi2_3;
+    Histogram H_chi2_3(a,b,nb_of_boxes);
+    file.open("Chi2_first_example.dat");
+    MonteCarlo(H_chi2_3,Chi2_3,[](double x){return x;},G,nb_samples);
+    file << H_chi2_3;
+    file.close();
+
+    Chi2_distribution<double,6> Chi2_6;
+    Histogram H_chi2_6(a,b,nb_of_boxes);
+    file.open("Chi2_second_example.dat");
+    MonteCarlo(H_chi2_6,Chi2_6,[](double x){return x;},G,nb_samples);
+    file << H_chi2_6;
+    file.close();
     return 0;
 }

@@ -100,3 +100,7 @@ The goal here is to systematize the process using the MonteCarlo function. If we
 
 
 Using the `Histogramme` class and the `MonteCarlo` function, let's create a histogram with 50 bins of the standard normal distribution $\mathcal{N}(0,1)$ over the interval $[-3, 3]$ based on a sample of 100,000 simulations for example. And displaying this histogram using a Python script based on the `matplotlib.pyplot` library.
+
+### _Application to a lesser-known distribution : a Chi-squared distribution_  $\chi^2$
+
+If $X_1, \dots, X_k$ are $k$ independent standard normal random variables, then $Y = X_1^2 + \dots + X_k^2$ follows the $\chi^2$ distribution with $k$ degrees of freedom

@@ -19,7 +19,7 @@ void Histogram::operator/=(double k){
 
 std::ostream & operator<< (std::ostream & output,const Histogram & H){
     for(unsigned int i = 0; i < H.Sample.size(); i++){
-        output << (H.lower_bound + i * 0.5 ) * H.box_width << "\t" << H.Sample[i] << "\n";
+        output << H.lower_bound + H.box_width * 0.5 + i * H.box_width << "\t" << H.Sample[i] << "\n";
     }
     return output;
 }
