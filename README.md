@@ -104,3 +104,20 @@ Using the `Histogramme` class and the `MonteCarlo` function, let's create a hist
 ### _Application to a lesser-known distribution : a Chi-squared distribution_  $\chi^2$
 
 If $X_1, \dots, X_k$ are $k$ independent standard normal random variables, then $Y = X_1^2 + \dots + X_k^2$ follows the $\chi^2$ distribution with $k$ degrees of freedom
+
+# Monte Carlo Markov Chain : 
+
+The method of approximating an integral by the strong law of large numbers using i.i.d. random variables can be extended to the approximation of invariant measures of Markov chains by the ergodic theorem. Let $(X_n)_{n \geq 0}$ be an irreducible, positive recurrent Markov chain on a set $E$, with invariant probability $\pi$. Then, for any measurable and $\pi$-integrable function $f: E \to \mathbb{R}$,
+
+$$
+\frac{1}{n} \sum_{k=1}^n f(X_k) \xrightarrow{p.s., L^1} \int_E f(x) d\pi(x) \quad \text{as } n \to \infty
+$$
+
+The numerical conclusion is that the `MonteCarlo` function can still be used for `RandomVariable` classes that do not only generate i.i.d. random variables but also generate a trajectory of a Markov chain with each call to the method template `operator()(RNG & G)`.
+
+### _Application : Markov chain in two states algorithm_ $E = \{1, 2\}$
+At each time step, if $X_n = 1$, then $X_{n+1} = 2$ with probability $a$ and $X_{n+1} = 1$ with probability $1 - a$; 
+
+if $X_n = 2$, then $X_{n+1} = 1$ with probability $b$ and $X_{n+1} = 2$ with probability $1 - b$. 
+
+This case is handled in the `MCMC.hpp` file.
