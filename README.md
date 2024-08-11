@@ -125,3 +125,18 @@ This case is handled in the `MCMC.hpp` file.
 Recall that the invariant measure is given by $\pi(1) = \frac{b}{a+b}$ and $\pi(2) = \frac{a}{a+b}$. 
 
 The `Stat2states` class counts the number of visits to states 1 and 2 according to the model and verifies the result of the ergodic theorem for this Markov chain.
+
+# Ising model in one dimension Metropolis-Hastings algorithm : 
+
+Let $N \geq 1$, $\beta > 0$, and $h \in \mathbb{R}$. Consider the finite set $E = \{-1, 1\}^N$ with the probability:
+
+$$
+\pi(x_0, \dots, x_{N-1}) = \frac{1}{Z_N(h, \beta)} \exp \left( \beta \sum_{k=0}^{N-2} x_k x_{k+1} + h \sum_{k=0}^{N-1} x_k \right)
+$$
+
+Given the complicated form of $\pi$ and the fact that the constant $Z_N(h, \beta)$ is difficult to compute, it is not possible to easily generate i.i.d. samples with distribution $\pi$. 
+
+However, there is a very simple Markov chain for which $\pi$ is the invariant measure! It is defined as follows:
+- At each time step, one of the $N$ variables $x_k$ is chosen uniformly.
+- Compute $p = \min \left(1, \exp \left(-2\beta(x_{k-1} + x_{k+1}) x_k - 2h x_k \right)\right)$ (if $k = 0$ or $k = N - 1$, the term $x_{k-1}$ or $x_{k+1}$ which is not defined is simply omitted).
+- With probability $p$, $x_k$ becomes $-x_k$ and, with probability $1 - p$, $x_k$ remains unchanged.

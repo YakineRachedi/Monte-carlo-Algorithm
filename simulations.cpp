@@ -2,6 +2,7 @@
 #include "monte_carlo.cpp"
 #include "chi_squared.hpp"
 #include "markov2states.hpp"
+#include "Ising.hpp"
 #include "pi.hpp"
 #include <iostream>
 #include <fstream>
@@ -126,5 +127,37 @@ int main(){
     cout << "\tpi(1): " << stat_mc.frequency_of_visits(1) << "\n";
     cout << "\tpi(2): " << stat_mc.frequency_of_visits(2) << "\n";
     cout << "-----------------------------------\n";
+
+    // Estimation of the global average of all spins for N = 1000 as β and h are fixed.
+    auto measure_function = [](const std::vector<int>& spins) {
+    double sum = 0.0;
+    for (int spin : spins) {
+        sum += spin;
+    }
+    return sum / spins.size();};
+    Ising1D ising(100, 1.0, 0.5);
+    double result = 0.0;
+    MonteCarlo(result, ising, measure_function, G, 10000);
+    cout << "Estimated result: " << result << std::endl;
+    cout << "-----------------------------------\n";
+    
+    // Estimation of the average value of x500 for N = 1000 as β and h vary.
+
+    unsigned N0 = 1000;
+    auto x500 = [](const std::vector<int> & v) {return v[499];};
+    cout << "Ising model: some values according to beta and h:\n";
+    ofstream output("Ising_model.dat");
+    for(double beta = 0.; beta < 2.; beta += 0.4){
+        for(double h = 0.; h < 1.; h += 0.2){
+            Ising1D Ising(N0,beta,h);
+            double m = 0.;
+            MonteCarlo(m,Ising,x500,G,nb_samples);
+            cout << "\ttheta = " << beta << "\th = " << h << "\taverage of x_500 = " << m << "\n";
+            output << "\t" << beta << "\t" << h << "\t" << m << "\n";
+        }
+    }
+    output.close();
+    cout << "-----------------------------------\n";
+
     return 0;
 }

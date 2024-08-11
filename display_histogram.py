@@ -26,6 +26,7 @@ plt.bar(x_normal_dist, y_normal_dist, width=(x_normal_dist[1] - x_normal_dist[0]
 plt.xlabel('x values')
 plt.ylabel('Frequency')
 plt.title(r'Histogram of the Normal Distribution $\mathcal{N}(0,1)$')
+plt.savefig('Normal_distribution.png')
 plt.show()
 
 # Histogram for the Chi-Squared distribution with 3 degrees of freedom
@@ -45,4 +46,5 @@ plt.xlim(0,10)
 plt.legend()
 
 plt.tight_layout()
+plt.savefig('Chi2_distributions.png')
 plt.show()
