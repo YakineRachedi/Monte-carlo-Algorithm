@@ -121,3 +121,7 @@ At each time step, if $X_n = 1$, then $X_{n+1} = 2$ with probability $a$ and $X_
 if $X_n = 2$, then $X_{n+1} = 1$ with probability $b$ and $X_{n+1} = 2$ with probability $1 - b$. 
 
 This case is handled in the `MCMC.hpp` file.
+
+Recall that the invariant measure is given by $\pi(1) = \frac{b}{a+b}$ and $\pi(2) = \frac{a}{a+b}$. 
+
+The `Stat2states` class counts the number of visits to states 1 and 2 according to the model and verifies the result of the ergodic theorem for this Markov chain.

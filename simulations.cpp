@@ -1,6 +1,7 @@
 #include "monte_carlo.hpp"
 #include "monte_carlo.cpp"
 #include "chi_squared.hpp"
+#include "markov2states.hpp"
 #include "pi.hpp"
 #include <iostream>
 #include <fstream>
@@ -107,5 +108,23 @@ int main(){
     MonteCarlo(H_chi2_6,Chi2_6,[](double x){return x;},G,nb_samples);
     file << H_chi2_6;
     file.close();
+
+    cout << "-----------------------------------\n";
+    cout << "***********************************\n";
+    cout << "-----------------------------------\n";
+    // Two-state Markov Chain
+    /* We vary a and b and display the associated invariant measures in a file
+    * in the form of a matrix where the coefficient (i,j) corresponds to pi(a_i,b_j)
+    */
+
+    double aa = 2. / 3.;
+    double bb = 1. / 2.;
+    Markov2states Mc2states(1,aa,bb);
+    Stat2states stat_mc;
+    MonteCarlo(stat_mc,Mc2states,[](auto x){return x;},G,nb_samples);
+    cout << "Estimation of the invariant measure by ergodic theorem:\n";    
+    cout << "\tpi(1): " << stat_mc.frequency_of_visits(1) << "\n";
+    cout << "\tpi(2): " << stat_mc.frequency_of_visits(2) << "\n";
+    cout << "-----------------------------------\n";
     return 0;
 }
